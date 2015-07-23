@@ -1,8 +1,9 @@
+sudo: false
+
 language: cpp
 
 os:
   - linux
-  - osx
 
 compiler:
   - gcc
@@ -19,10 +20,6 @@ env:
     - secure: "HM34r7AQ+XQ2UE1Cy7NtqcWyVxTFMntwV3k/APN6kxMPTWAHpkOWrtoO+wxGY+D7yw+dtVl5wSziyWQW+6tcg03qgJWugSxFqH9rvSTVNEQ19Gjoz6zxn+usmSa7fYxwGYXYWl+GnSTwLr/NKKOCjh1OUXBJ0rz31CK+gU1BgNtQTcbQLA9r3kCsIy43cZaqxusDRQk9AmtzA0eb+myH7mcRVWfBxKu1f4Hk+dgD+TleeicLF/YyHLYtcDawPcAysKgwDWSVXASHh9Ie5HY4zioMa92EUiThTBqHQTfSLVc+5qOrU0LX7RcUHsCuWfSCUjRA+nQ7ZIIgVj0L/UU/H0esafT9WE/9o7LdFXkPa8FQwZw2I8gcodaPKSpHoZvfeYgxibOPiUzY+r66CkOOpLyQn73oDMuwPqypY47dykINZZt061ljOLTuu3CSVZvdvZCKkQE2i/Db23HZ4wjSLTLsKVq7qXn6YA9Xo246cwWH02Gf2mJGIf1oEY1F78C7NXyRijit5qCzNf1mJXecG/yO/MpFVHQ7Jg787gACPQ+nWiIQ6Zob3KBezC0XgjBe660VZPct++g69NZzBlMslk+ioDqdNUkLZIShlPL3DiLqRRA5meBidyckB2XOSRX16v5ajIK8nWrnVLb004AcMrXLmiRlzHfQInfUUndxmhE="
 
 matrix:
-  exclude:
-     - os: osx
-       compiler: gcc
-
   include:
      - os: linux
        compiler: gcc
@@ -33,11 +30,21 @@ matrix:
 
   fast_finish: true
 
+install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.8
+      - g++-4.8
+      - clang
+
 before_script:
   - mkdir build && cd build
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then cmake ..; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then cmake -DCORE_SYSTEM_NAME=darwin ..; fi
-
+  - cmake ../ -DCMAKE_CXX_COMPILER=$(which $CXX) -DCMAKE_C_COMPILER=$(which $CC)
 
 script:
   - if [ "$COVERITY_SCAN" != 1 ]; then  cmake --build .; fi
