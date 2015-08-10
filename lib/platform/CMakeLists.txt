@@ -1,6 +1,6 @@
 project(platform)
 
-cmake_minimum_required(VERSION 2.8.9)
+cmake_minimum_required(VERSION 2.6)
 enable_language(CXX)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR})
@@ -19,6 +19,11 @@ set(CMAKE_POSITION_INDEPENDENT_CODE on)
 if(WIN32)
   set(PLAT_SOURCES src/windows/dlfcn-win32.cpp
                    src/windows/os-threads.cpp)
+else()
+  if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
+  endif()
 endif()
 
 set(platform_INCLUDE_DIRS "${CMAKE_BINARY_DIR}/include/platform")
