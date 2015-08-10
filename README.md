@@ -35,7 +35,7 @@ cd build/
 
 To build PVR addon execute the following:
 ```
-cmake -DCORE_SYSTEM_NAME=darwin -DCMAKE_BUILD_TYPE=Release ../
+cmake -DCORE_SYSTEM_NAME=osx -DCMAKE_BUILD_TYPE=Release ../
 make
 ```
 
