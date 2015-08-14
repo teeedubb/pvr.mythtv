@@ -1,5 +1,6 @@
 /build
 nbproject
 cppmyth_config.h
+addon.xml
 *.swp
 *~

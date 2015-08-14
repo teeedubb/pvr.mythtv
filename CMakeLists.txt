@@ -2,11 +2,19 @@ project(pvr.mythtv)
 
 cmake_minimum_required(VERSION 2.6)
 
-set(APP_VERSION_MAJOR "16" CACHE string "Application version major")
-set(APP_VERSION_MINOR "0" CACHE string "Application verison minor")
+set(APP_VERSION_MAJOR "16" CACHE STRING "Application version major")
+set(APP_VERSION_MINOR "0" CACHE STRING "Application verison minor")
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
 
+# Make sure CORE_SYSTEM_NAME is set
+if(NOT CORE_SYSTEM_NAME)
+  if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(CORE_SYSTEM_NAME "osx")
+  else()
+    string(TOLOWER ${CMAKE_SYSTEM_NAME} CORE_SYSTEM_NAME)
+  endif()
+endif()
 include(addon-helpers)
 
 enable_language(CXX)
