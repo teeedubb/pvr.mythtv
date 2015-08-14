@@ -1,4 +1,5 @@
-sudo: false
+##Explicitly send your builds to the container-based infrastructure
+#sudo: false
 
 language: cpp
 
@@ -32,21 +33,32 @@ matrix:
 
 install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+##Adding and install APT for standard infrastructure
+  - wget http://www.cmake.org/files/v3.3/cmake-3.3.0-Linux-x86_64.tar.gz
+    && tar -xzf cmake-3.3.0-Linux-x86_64.tar.gz
+    && sudo cp -fR cmake-3.3.0-Linux-x86_64/* /usr/
+    && sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
+    && sudo apt-get -qq update
+    && sudo apt-get -qq install gcc-4.8 g++-4.8 clang
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-4.8
-      - g++-4.8
-      - clang
+##Adding and install APT for Container-based infrastructure
+#addons:
+#  apt:
+#    sources:
+#      - ubuntu-toolchain-r-test
+#      - kalakris-cmake
+#    packages:
+#      - gcc-4.8
+#      - g++-4.8
+#      - clang
+#      - cmake
 
 before_script:
   - mkdir build && cd build
   - cmake ../ -DCMAKE_CXX_COMPILER=$(which $CXX) -DCMAKE_C_COMPILER=$(which $CC)
 
 script:
-  - if [ "$COVERITY_SCAN" != 1 ]; then  cmake --build .; fi
+  - if [ "$COVERITY_SCAN" != 1 ]; then cmake --build .; fi
+  - if [ "$COVERITY_SCAN" != 1 ]; then cmake ../ -DPACKAGE_ZIP=ON && cmake --build . --target package; fi
   - if [ "$COVERITY_SCAN" = 1 ]; then  eval "${COVERITY_SCAN_BUILD}"; fi
 
