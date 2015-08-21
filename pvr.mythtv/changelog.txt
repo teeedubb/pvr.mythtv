@@ -1,3 +1,7 @@
+v1.13.0
+- Sync cppmyth upstream (2.1.0)
+- New setting limit_tune_attempts
+
 v1.12.28
 - backport from 2.4.1
 
