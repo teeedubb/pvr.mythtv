@@ -1,3 +1,6 @@
+v2.6.0
+- New setting limit_tune_attempts
+
 v2.5.0
 - Sync cppmyth upstream (2.1.0)
 
