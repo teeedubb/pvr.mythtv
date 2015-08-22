@@ -1,4 +1,8 @@
-v1.9.22-60 (Backported from KODI release)
+v1.9.22-61 (Backported from KODI release)
+- Support protocol 0.28-pre:87
+- New setting limit_tune_attempts
+- New translations for european languages
+- Sync cppmyth upstream (2.2.0)
 - Sync cppmyth upstream (1.5.1.4)
 - AVINFO: exit on parse error
 - Fix override of rule end offset with 0
