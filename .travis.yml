@@ -1,10 +1,11 @@
 ##Explicitly send your builds to the container-based infrastructure
-#sudo: false
+sudo: false
 
 language: cpp
 
 os:
   - linux
+  - osx
 
 compiler:
   - gcc
@@ -29,33 +30,32 @@ matrix:
   allow_failures:
      - env: COVERITY_SCAN=1
 
+  exclude:
+     - os: osx
+       compiler: gcc
+     - os: linux
+       compiler: clang
+
   fast_finish: true
 
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
-##Adding and install APT for standard infrastructure
-  - wget http://www.cmake.org/files/v3.3/cmake-3.3.0-Linux-x86_64.tar.gz
-    && tar -xzf cmake-3.3.0-Linux-x86_64.tar.gz
-    && sudo cp -fR cmake-3.3.0-Linux-x86_64/* /usr/
-    && sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
-    && sudo apt-get -qq update
-    && sudo apt-get -qq install gcc-4.8 g++-4.8 clang
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then mkdir $HOME/cmake && curl http://www.cmake.org/files/v3.3/cmake-3.3.0-Linux-x86_64.tar.gz | tar -xz --strip-components=1 -C $HOME/cmake && export PATH=$HOME/cmake/bin:$PATH ; fi
 
 ##Adding and install APT for Container-based infrastructure
-#addons:
-#  apt:
-#    sources:
-#      - ubuntu-toolchain-r-test
-#      - kalakris-cmake
-#    packages:
-#      - gcc-4.8
-#      - g++-4.8
-#      - clang
-#      - cmake
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.8
+      - g++-4.8
+      - clang
 
 before_script:
+  - if [ "$TRAVIS_OS_NAME" = "linux" -a "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  - cmake --version
   - mkdir build && cd build
-  - cmake ../ -DCMAKE_CXX_COMPILER=$(which $CXX) -DCMAKE_C_COMPILER=$(which $CC)
+  - cmake .. -Wdev -DCMAKE_CXX_COMPILER=$(which $CXX) -DCMAKE_C_COMPILER=$(which $CC)
 
 script:
   - if [ "$COVERITY_SCAN" != 1 ]; then cmake --build .; fi
