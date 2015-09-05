@@ -1,3 +1,6 @@
+v2.7.0
+- Notify user on addon failure
+
 v2.6.2
 - Security fix for JSON parser
 - Add EPG Entry associated with recent Recording
