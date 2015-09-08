@@ -12,6 +12,8 @@ matrix:
   exclude:
      - os: osx
        compiler: gcc
+     - os: linux
+       compiler: clang
 
 before_script:
   - mkdir build && cd build
