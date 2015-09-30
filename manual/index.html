@@ -70,7 +70,10 @@
               <li >
                 <a href="#Advancedfeatures">Advanced features</a>
               </li>
-            
+
+              <li >
+                <a href="#Troubleshooting">Troubleshooting</a>
+              </li>
           </ul>
           </div>
         </div>
@@ -91,7 +94,9 @@
               <p>Set the IPv6 address of the backend as "<b>::1</b>" if you haven't IP6 network infrastructure, which is mostly the case.</p>
               <p>Any IPv6 addresses as "fe80::..." are not usable. Only if you have valid IP6 network infrastructure you could set address assigned to your backend. Otherwise addon will not connect properly.</p>
               </ul>
-              
+
+              <p>You could check for your issue in section <a href="#Troubleshooting">Troubleshooting</a>.</p>
+
             </section>
           
             <section id="Channels">
@@ -146,6 +151,17 @@
                       todo
                   </div>
               
+            </section>
+
+            <section id="Troubleshooting">
+              <h2>Troubleshooting</h2>
+                  <div>
+                      <i class="icon-chevron-right"></i>
+<b>Live TV not showing, but I'm pretty sure that it was working according to Kodi. At least the EPG was loading at startup, and the addon was enabled.</b>
+<p>Regular issue is none of channels have been retrieved due a data corruption. The addon had choked on a channel with an invalid character in the name or call sign.
+Editing the channel name or call sign in the MythTV backend will fix the issue.</p>
+                  </div>
+
             </section>
 
         </div>
