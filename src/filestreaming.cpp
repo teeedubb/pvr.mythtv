@@ -20,41 +20,37 @@
  *
  */
 
-#include "nobroadcasting.h"
+#include "filestreaming.h"
 #include "client.h"
 #include <platform/os.h>
-#include <inttypes.h>
 
-#define MPEGTS_FILENAME "nobroadcasting.ts"
-#define FILE_READ_SIZE  131072
+#define MAX_READ_SIZE  131072
 
 using namespace ADDON;
 
-NoBroadcasting::NoBroadcasting()
+FileStreaming::FileStreaming(const std::string& filePath)
 : m_valid(false)
 , m_file(0)
 , m_flen(0)
 , m_pos(0)
 {
-  std::string filePath;
-  filePath = g_szClientPath + PATH_SEPARATOR_STRING + "resources" + PATH_SEPARATOR_STRING + MPEGTS_FILENAME;
   m_valid = _init(filePath.c_str());
 }
 
-NoBroadcasting::~NoBroadcasting()
+FileStreaming::~FileStreaming()
 {
   if (m_file)
     XBMC->CloseFile(m_file);
 }
 
-int NoBroadcasting::Read(void* buffer, unsigned n)
+int FileStreaming::Read(void* buffer, unsigned n)
 {
   if (!m_valid)
     return -1;
 
   char* b = (char*)buffer;
   bool eof = false;
-  n = (n > FILE_READ_SIZE ? FILE_READ_SIZE : n);
+  n = (n > MAX_READ_SIZE ? MAX_READ_SIZE : n);
   unsigned r = n;
   do
   {
@@ -76,12 +72,10 @@ int NoBroadcasting::Read(void* buffer, unsigned n)
   } while (r > 0 || eof);
   if (eof)
     XBMC->Log(LOG_DEBUG, "%s: EOF", __FUNCTION__);
-  if (g_bExtraDebug)
-    XBMC->Log(LOG_DEBUG, "%s: flen=%" PRId64 " pos=%" PRId64, __FUNCTION__, m_flen, m_pos);
   return (int)(n -r);
 }
 
-int64_t NoBroadcasting::Seek(int64_t offset, Myth::WHENCE_t whence)
+int64_t FileStreaming::Seek(int64_t offset, Myth::WHENCE_t whence)
 {
   switch (whence)
   {
@@ -103,7 +97,7 @@ int64_t NoBroadcasting::Seek(int64_t offset, Myth::WHENCE_t whence)
   return -1;
 }
 
-bool NoBroadcasting::_init(const char* filePath)
+bool FileStreaming::_init(const char* filePath)
 {
   m_file = XBMC->OpenFile(filePath, 0);
   if (m_file)
@@ -111,6 +105,7 @@ bool NoBroadcasting::_init(const char* filePath)
     m_flen = XBMC->GetFileLength(m_file);
     return true;
   }
+  XBMC->Log(LOG_DEBUG, "%s: cannot open file '%s'", __FUNCTION__, filePath);
   return false;
 }
 

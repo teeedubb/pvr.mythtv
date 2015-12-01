@@ -53,7 +53,6 @@ set(MYTHTV_SOURCES src/avinfo.cpp
                    src/demux.cpp
                    src/guidialogbase.cpp
                    src/guidialogyesno.cpp
-                   src/nobroadcasting.cpp
                    src/pvrclient-mythtv.cpp
                    src/cppmyth/MythScheduleManager.cpp
                    src/cppmyth/MythScheduleHelperNoHelper.cpp
@@ -65,7 +64,8 @@ set(MYTHTV_SOURCES src/avinfo.cpp
                    src/cppmyth/MythProgramInfo.cpp
                    src/cppmyth/MythChannel.cpp
                    src/client.cpp
-                   src/fileOps.cpp)
+                   src/fileOps.cpp
+                   src/filestreaming.cpp)
 
 add_subdirectory(lib/cppmyth)
 add_subdirectory(lib/kodi)
