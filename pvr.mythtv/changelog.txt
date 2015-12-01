@@ -1,5 +1,5 @@
-v2.8.3
-- Show stream NO BROADCASTING when channel tuning failed
+v2.8.4
+- Show stream 'channel unavailable' when channel tuning failed
 
 v2.8.1
 - Retry read after system call interruption
