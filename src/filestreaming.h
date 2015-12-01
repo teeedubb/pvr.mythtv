@@ -23,11 +23,11 @@
 
 #include <mythstream.h>
 
-class NoBroadcasting : public Myth::Stream
+class FileStreaming : public Myth::Stream
 {
 public:
-  NoBroadcasting();
-  virtual ~NoBroadcasting();
+  FileStreaming(const std::string& filePath);
+  virtual ~FileStreaming();
 
   bool IsValid() { return m_valid; }
 

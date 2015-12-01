@@ -1958,9 +1958,9 @@ bool PVRClientMythTV::OpenLiveStream(const PVR_CHANNEL &channel)
   if (m_fileOps)
     m_fileOps->Resume();
   XBMC->Log(LOG_ERROR,"%s: Failed to open live stream", __FUNCTION__);
-  // Open the dummy stream 'NO BROADCASTING'
+  // Open the dummy stream 'CHANNEL UNAVAILABLE'
   if (!m_dummyStream)
-    m_dummyStream = new NoBroadcasting();
+    m_dummyStream = new FileStreaming(g_szClientPath + PATH_SEPARATOR_STRING + "resources" + PATH_SEPARATOR_STRING + "channel_unavailable.ts");
   if (m_dummyStream && m_dummyStream->IsValid())
   {
     if(g_bDemuxing)
@@ -1979,13 +1979,10 @@ void PVRClientMythTV::CloseLiveStream()
   // Begin critical section
   CLockObject lock(m_lock);
   // Destroy my demuxer
-  if (m_demux)
-    SAFE_DELETE(m_demux);
+  SAFE_DELETE(m_demux);
   // Destroy my stream
-  if (m_liveStream)
-    SAFE_DELETE(m_liveStream);
-  if (m_dummyStream)
-    SAFE_DELETE(m_dummyStream);
+  SAFE_DELETE(m_liveStream);
+  SAFE_DELETE(m_dummyStream);
   // Resume fileOps
   if (m_fileOps)
     m_fileOps->Resume();
@@ -2027,13 +2024,11 @@ bool PVRClientMythTV::SwitchChannel(const PVR_CHANNEL &channel)
   // Begin critical section
   CLockObject lock(m_lock);
   // Destroy my demuxer for reopening
-  if (m_demux)
-    SAFE_DELETE(m_demux);
+  SAFE_DELETE(m_demux);
   // Stop the live for reopening
   if (m_liveStream)
     m_liveStream->StopLiveTV();
-  if (m_dummyStream)
-    SAFE_DELETE(m_dummyStream);
+  SAFE_DELETE(m_dummyStream);
   // Try reopening for channel
   if (OpenLiveStream(channel))
     return true;
