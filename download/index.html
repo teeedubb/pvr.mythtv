@@ -136,6 +136,17 @@
             <ul>
               <li>
               <p>Ubuntu packages are available in repository <code>ppa:jlbarriere68/ppa</code>. Go to <a href="https://launchpad.net/~jlbarriere68/+archive/ubuntu/ppa">Janbar PPA</a> for technical details.</p>
+	      <p>Open a console and register the ppa repository :</p>
+	      <p><code>sudo apt-add-repository ppa:jlbarriere68/ppa</code></p>
+	      <p>Update your cache :</p>
+	      <p><code>sudo apt-get update</code></p>
+	      <p>Remove installed addon from other sources if any :</p>
+	      <p><code>sudo apt-get purge kodi-pvr-mythtv*</code></p>
+	      <p>Search available addons in your cache :<p>
+	      <p><code>apt-cache search kodi-pvr.mythtv</code></p>
+	      <p>Finally depending of which version of kodi you use, install the corresponding addon :</p>
+	      <p>For Isengard type command <code>sudo apt-get install kodi-pvr-mythtv-isengard</code></p>
+	      <p>For Helix type command <code>sudo apt-get install kodi-pvr-mythtv-helix</code></p>
               </li>
             </ul>
 
