@@ -1,4 +1,4 @@
-Source: kodi-pvr-mythtv-dev
+Source: kodi-pvr-mythtv-jarvis
 Priority: extra
 Maintainer: janbar <jlbarriere68@gmail.com>
 Build-Depends: debhelper (>= 9.0.0), cmake
@@ -6,17 +6,17 @@ Standards-Version: 3.9.4
 Section: libs
 Homepage: https://github.com/janbar/pvr.mythtv
 
-Package: kodi-pvr-mythtv-dev
+Package: kodi-pvr-mythtv-jarvis
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: MythTV PVR for Kodi
- MythTV PVR addon for Kodi
+ MythTV PVR addon for Kodi 16 (Jarvis)
 
-Package: kodi-pvr-mythtv-dev-dbg
+Package: kodi-pvr-mythtv-jarvis-dbg
 Section: debug
 Architecture: any
 Depends: ${misc:Depends}
 Description: debug symbols for MythTV PVR for Kodi
- debug symbols for MythTV PVR addon for Kodi
+ debug symbols for MythTV PVR addon for Kodi 16 (Jarvis)
 
