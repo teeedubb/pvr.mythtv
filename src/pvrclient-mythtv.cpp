@@ -2022,6 +2022,7 @@ bool PVRClientMythTV::OpenLiveStream(const PVR_CHANNEL &channel)
       m_demux = new Demux(m_dummyStream);
     return true;
   }
+  SAFE_DELETE(m_dummyStream);
   XBMC->QueueNotification(QUEUE_WARNING, XBMC->GetLocalizedString(30305)); // Channel unavailable
   return false;
 }
