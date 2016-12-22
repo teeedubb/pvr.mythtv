@@ -1,3 +1,8 @@
+v4.12.8
+- Sync demuxer upstream
+- Cleanup addon api
+- Fix error no error reading bookmark
+
 v4.12.7
 - Sync demuxer upstream
 - Fix incorrect hours to display when g_bUseAirdate was set
